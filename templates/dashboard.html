@@ -1,0 +1,14 @@
+{% extends 'base.html' %}{% from '_docs.html' import doc_list %}{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="eyebrow">Overview</div><h1>Welcome, {{ current_user.username }}</h1><p>Here's what's happening in your vault.</p></div>
+  <a class="btn" href="{{ url_for('upload') }}">+ Upload Document</a></div>
+<div class="stats"><div class="stat"><small>Documents</small><strong>{{ total }}</strong></div>
+  <div class="stat"><small>Storage used</small><strong>{{ size|filesize }}</strong></div>
+  <div class="stat"><small>Categories used</small><strong>{{ cats|length }}</strong></div></div>
+<div class="two">
+  <div class="panel"><div class="section-head"><h2>Recent documents</h2><a href="{{ url_for('documents') }}">View all →</a></div>
+    {% if recent %}{{ doc_list(recent) }}{% else %}<p class="hint" style="margin-top:12px">No documents yet.</p>{% endif %}</div>
+  <div class="panel"><div class="section-head"><h2>Your recent activity</h2></div>
+    {% for a in activity %}<p style="padding:9px 0;border-bottom:1px solid var(--line);font-size:.8rem"><span class="act">{{ a.action }}</span> {{ a.details }}<br><span class="hint">{{ a.created_at.strftime('%d %b %Y, %H:%M') }}</span></p>
+    {% else %}<p class="hint" style="margin-top:12px">No activity yet.</p>{% endfor %}</div>
+</div>{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% block title %}Activity Logs{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="eyebrow">Audit trail</div><h1>Activity Logs</h1><p>Every security-relevant action in the vault.</p></div></div>
+<div class="panel table-wrap"><table><thead><tr><th>Time (UTC)</th><th>User</th><th>Action</th><th>Details</th><th>IP</th></tr></thead><tbody>
+{% for l in pagination.items %}<tr><td>{{ l.created_at.strftime('%d %b %Y %H:%M:%S') }}</td><td>{{ l.username }}</td>
+<td><span class="act {{ 'bad' if 'FAIL' in l.action }}">{{ l.action }}</span></td><td>{{ l.details }}</td><td>{{ l.ip_address }}</td></tr>
+{% else %}<tr><td colspan="5" class="hint">No activity recorded.</td></tr>{% endfor %}</tbody></table></div>
+<div class="pager">{% if pagination.has_prev %}<a class="btn btn-ghost btn-sm" href="{{ url_for('logs', page=pagination.prev_num) }}">← Newer</a>{% endif %}
+{% if pagination.has_next %}<a class="btn btn-ghost btn-sm" href="{{ url_for('logs', page=pagination.next_num) }}">Older →</a>{% endif %}</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}{% from '_docs.html' import doc_list %}{% block title %}Search Documents{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="eyebrow">Find your files</div><h1>Search Documents</h1>
+  <p>Find your documents by name, category, user, or upload date.</p></div>
+  <a class="btn btn-ghost" href="{{ url_for('documents') }}">← Back to Documents</a></div>
+<form class="panel" method="get"><div class="form-grid">
+  <div class="field"><label>Search Documents</label><input class="input" name="q" value="{{ term }}" placeholder="Enter document title or filename"></div>
+  <div class="field"><label>Search by Category</label><select name="category"><option value="">All Categories</option>
+    {% for c in CATEGORIES %}<option value="{{ c[0] }}" {{ 'selected' if cat==c[0] }}>{{ c[0] }}</option>{% endfor %}</select></div>
+  <div class="field"><label>Search by User</label><input class="input" name="user" value="{{ owner }}" placeholder="Enter owner's username"></div>
+  <div class="field"><label>📅 Search by Date</label><input type="date" name="date" value="{{ day }}"><div class="hint">Select a date from the calendar to find documents uploaded on that day.</div></div>
+</div>
+<div style="display:flex;gap:10px"><button class="btn">🔍 Search Documents</button><a class="btn btn-ghost" href="{{ url_for('search') }}">↻ Reset Filters</a></div></form>
+<div class="section-head" style="margin-top:30px"><div><div class="eyebrow" style="margin:0">Your documents</div><h2>Search Results</h2></div><span class="count">{{ results|length }} document(s)</span></div>
+{% if results %}{{ doc_list(results, show_owner=current_user.is_admin) }}
+{% else %}<div class="empty"><div class="big">⌕</div><h3>{{ 'No matching documents' if searched else 'Start searching' }}</h3>
+<p>{{ 'Try adjusting your filters.' if searched else 'Use the filters above to find documents.' }}</p></div>{% endif %}
+{% endblock %}

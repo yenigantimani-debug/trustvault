@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}TrustVault{% endblock %} · TrustVault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head>
+<body>
+{% set ep = request.endpoint %}
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-head">
+      <a class="logo" href="{{ url_for('dashboard') }}"><span class="logo-mark">◆</span>TrustVault</a>
+      <button class="burger" data-toggle-sidebar aria-label="Menu">☰</button>
+    </div>
+    <nav class="nav">
+      <a href="{{ url_for('dashboard') }}" class="{{ 'active' if ep=='dashboard' }}"><i>⌂</i>Dashboard</a>
+      <a href="{{ url_for('documents') }}" class="{{ 'active' if ep=='documents' }}"><i>▤</i>My Documents</a>
+      <a href="{{ url_for('search') }}" class="{{ 'active' if ep=='search' }}"><i>⌕</i>Search Documents</a>
+      <a href="{{ url_for('categories') }}" class="{{ 'active' if ep in ('categories','category_docs') }}"><i>▦</i>Categories</a>
+      <a href="{{ url_for('upload') }}" class="{{ 'active' if ep=='upload' }}"><i>+</i>Upload Document</a>
+      <a href="{{ url_for('logs') }}" class="{{ 'active' if ep=='logs' }}"><i>◷</i>Activity Logs</a>
+    </nav>
+    <div class="vault-card"><span class="tick">✓</span><span><b>Vault Protected</b>Your files stay secure</span></div>
+  </aside>
+  <div class="main-col">
+    <header class="topbar">
+      <div class="top-left">
+        <button class="burger" data-toggle-sidebar aria-label="Menu">☰</button>
+        <a class="logo" href="{{ url_for('dashboard') }}"><span class="logo-mark">◆</span>TrustVault</a>
+      </div>
+      <div class="top-right">
+        <span class="pill"><span class="dot"></span>Secure Session</span>
+        <div class="menu">
+          <div class="avatar" id="avatar" style="cursor:pointer">{{ current_user.username[0]|upper }}</div>
+          <div class="menu-pop" id="menuPop">
+            <div>Signed in as <b style="color:#fff">{{ current_user.username }}</b>{% if current_user.is_admin %} · admin{% endif %}</div>
+            <a href="{{ url_for('logout') }}">Sign out</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="content">{% include '_flash.html' %}{% block content %}{% endblock %}</main>
+    <footer class="footer"><span>© {{ now_year }} TrustVault. All rights reserved.</span><span>Secure Document Management</span></footer>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script></body></html>

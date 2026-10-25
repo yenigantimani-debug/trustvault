@@ -1,0 +1,14 @@
+{% extends 'base.html' %}{% block title %}Upload Document{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="eyebrow">Add to vault</div><h1>Upload Document</h1><p>Store a new document securely in your vault.</p></div>
+  <a class="btn btn-ghost" href="{{ url_for('documents') }}">← Back to Documents</a></div>
+<form class="panel" method="post" enctype="multipart/form-data" style="max-width:760px">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="field"><label>Document Title *</label><input class="input" name="title" placeholder="e.g. Employment Agreement" required maxlength="200"></div>
+  <div class="field"><label>Description</label><textarea name="description" placeholder="Briefly describe this document"></textarea></div>
+  <div class="field"><label>Category *</label><select name="category">{% for c in CATEGORIES %}<option {{ 'selected' if selected==c[0] }}>{{ c[0] }}</option>{% endfor %}</select></div>
+  <div class="field"><label>Choose File *</label><input type="file" name="file" required accept=".pdf,.txt,.docx,.xlsx,.csv,.png,.jpg,.jpeg">
+    <div class="hint">Allowed: PDF, TXT, DOCX, XLSX, CSV, PNG, JPG, JPEG. Maximum size: 10 MB.</div></div>
+  <div class="notice"><b>🔒 Security Notice</b>Files are renamed, stored privately and only accessible to you. Every upload and download is recorded in the activity log.</div>
+  <div style="margin-top:20px"><button class="btn">Upload Securely →</button></div>
+</form>{% endblock %}

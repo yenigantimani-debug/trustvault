@@ -1,0 +1,24 @@
+{% extends 'auth_base.html' %}{% block title %}Sign in · TrustVault{% endblock %}
+{% block body %}<div class="login-page">
+  <div class="login-top"><a class="logo" href="{{ url_for('login') }}"><span class="logo-mark">◆</span>TrustVault</a></div>
+  {% include '_flash.html' %}
+  <div class="login-grid">
+    <section class="login-left"><div class="shield">🛡️</div>
+      <h2>Your Documents,<br><span>Our Priority</span></h2>
+      <p>Secure, organized, and always within your control. Keep your important documents protected in one place.</p>
+      <div class="badges"><div class="badge"><i>✓</i>Secure</div><div class="badge"><i>⚡</i>Fast</div><div class="badge"><i>◆</i>Trusted</div></div>
+    </section>
+    <section class="login-right">
+      <div><span class="pill"><span class="dot"></span>Secure Access</span></div>
+      <h1>Welcome Back</h1><p class="sub">Sign in to access your secure document vault.</p>
+      <form method="post" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="field"><label for="identifier">Username or Email</label>
+          <div class="iconfield"><span class="ico">👤</span><input class="input" id="identifier" name="identifier" placeholder="Enter your username or email" required autofocus autocomplete="username"></div></div>
+        <div class="field"><label for="password">Password</label>
+          <div class="pw iconfield"><span class="ico">🔒</span><input class="input" id="password" type="password" name="password" placeholder="Enter your password" required autocomplete="current-password"><button type="button" class="eye" tabindex="-1">◉</button></div></div>
+        <button class="btn btn-block" type="submit">→ Sign In</button>
+      </form>
+      <p class="alt">Don't have an account? <a href="{{ url_for('register') }}">Create Account</a></p>
+    </section>
+  </div></div>{% endblock %}

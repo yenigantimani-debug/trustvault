@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% from '_docs.html' import doc_list %}{% block title %}{{ cat[0] }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="eyebrow">Category</div><h1>{{ cat[1] }} {{ cat[0] }}</h1><p>{{ cat[2] }}</p></div>
+  <div style="display:flex;gap:10px"><a class="btn btn-ghost" href="{{ url_for('categories') }}">← Categories</a>
+  <a class="btn" href="{{ url_for('upload', category=cat[0]) }}">+ Upload</a></div></div>
+<div class="section-head"><h2>Documents</h2><span class="count">{{ docs|length }} document(s)</span></div>
+{% if docs %}{{ doc_list(docs) }}{% else %}<div class="empty"><div class="big">{{ cat[1] }}</div><h3>No {{ cat[0] }} documents yet</h3>
+<p>Upload a document to this category to see it here.</p></div>{% endif %}
+{% endblock %}

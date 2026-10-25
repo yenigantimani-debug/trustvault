@@ -1,0 +1,13 @@
+{% extends 'base.html' %}{% from '_docs.html' import doc_list %}{% block title %}My Documents{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>My Documents</h1><p>View, organize and manage your secure documents.</p></div>
+  <a class="btn" href="{{ url_for('upload') }}">+ Upload Document</a></div>
+<form class="panel searchbar" method="get"><div class="iconfield"><span class="ico">⌕</span>
+  <input class="input" name="q" value="{{ term }}" placeholder="Search documents by title..."></div><button class="btn">Search</button></form>
+<div class="section-head"><h2>{{ 'Results' if term else 'All Documents' }}</h2><span class="count">{{ docs|length }} document(s)</span></div>
+<p class="hint">Your uploaded files in one place.</p>
+{% if docs %}{{ doc_list(docs) }}{% else %}
+<div class="empty"><div class="big">▤</div><h3>No documents found</h3>
+  <p>{{ 'Nothing matches your search.' if term else 'Your vault is currently empty. Upload your first document to get started.' }}</p>
+  <a class="btn" href="{{ url_for('upload') }}">+ Upload Your First Document</a></div>{% endif %}
+{% endblock %}
